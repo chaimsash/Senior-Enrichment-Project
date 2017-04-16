@@ -1,23 +1,36 @@
-
 import React, {Component} from 'react';
-import { StyleSheet, Text, Image, View, TextInput, ScrollView, ListView, Button} from 'react-native';
+import { Picker, StyleSheet, Text, Image, View, TextInput, ScrollView, ListView, Button} from 'react-native';
 
-export default class AddStudent extends Component{
-  static navigationOptions = ({ navigation, screenProps }) => ({
+export default class addStudent extends Component{
+  static navigationOptions = () => ({
     title: 'Add Student',
-    headerRight: <Button title='Submit' onPress={() => navigation.navigate('Students')}/>,
+    // headerRight: <Button title='Submit' onPress={() => this.handleSubmit()}/>,
   });
+
   constructor(props){
     super(props)
-
+    const navProps = props.navigation.state.params;
     this.state = {
-      studentName: '',
-      studentEmail: '',
-      studentCampus: ''
+      studentName: navProps ? props.navigation.state.params.name : '',
+      studentEmail: navProps ? props.navigation.state.params.email : '',
+      studentCampus: navProps ? props.navigation.state.params.campus : {}
     }
   }
 
+  handleSubmit(){
+    const navProps = this.props.navigation.state.params;
+    const id = navProps ? navProps.id : null;
+    this.props.postStudent(id, this.state.studentName, this.state.studentEmail, this.state.studentCampus.id);
+    this.props.navigation.navigate('Students');
+  }
+
+  destroy(id){
+    this.props.startRemovingStudent(id);
+    this.props.navigation.navigate('Students');
+  }
+
   render(){
+    const navProps = this.props.navigation.state.params;
     return (
       <View>
         <TextInput
@@ -33,12 +46,15 @@ export default class AddStudent extends Component{
           onChangeText={(studentEmail) => this.setState({studentEmail})}
           value={this.state.studentEmail}
         />
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          placeholder='Student Campus'
-          onChangeText={(studentCampus) => this.setState({studentCampus})}
-          value={this.state.studentCampus}
-        />
+        <Picker
+          selectedValue={this.state.studentCampus}
+          onValueChange={(studentCampus) => this.setState({studentCampus})}>
+          {this.props.campuses.map(campus => {
+            return <Picker.Item key={campus.name} label={campus.name} value={campus} />
+          })}
+        </Picker>
+        <Button title={ navProps ? 'Update' : 'Submit' } onPress={() => this.handleSubmit()}/>
+        { navProps ? <Button title='Remove' color='red' onPress={() => this.destroy(navProps.id)} /> : <Text></Text>}
       </View>
     )
   }

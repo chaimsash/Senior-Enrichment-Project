@@ -6,10 +6,8 @@ import Students from './containers/StudentsContainer';
 import Student from './containers/StudentContainer';
 import Campuses from './containers/CampusesContainer';
 import Campus from './containers/CampusContainer';
-import AddStudent from './components/addStudent';
-import AddCampus from './components/addCampus';
-import EditCampus from './components/editCampus';
-import EditStudent from './components/editStudent';
+import AddStudent from './containers/AddStudentContainer';
+import AddCampus from './containers/AddCampusContainer';
 
 
 const Tabs = TabNavigator({
@@ -29,8 +27,6 @@ export const Nav = StackNavigator({
 	Main: { screen: Tabs },
   AddStudent: {screen: AddStudent},
   AddCampus: {screen: AddCampus},
-  EditCampus: {screen: EditCampus},
-  EditStudent: {screen: EditStudent},
   Student: {screen: Student},
   Campus: {screen: Campus}
 });

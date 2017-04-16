@@ -4,7 +4,7 @@ import { StyleSheet, Text, Image, View, TextInput, ScrollView, ListView, Button}
 export default class Student extends Component {
     static navigationOptions = ({ navigation, screenProps }) => ({
       title: 'Student ' + navigation.state.params.name,
-      headerRight: <Button title='Edit' onPress={() => navigation.navigate('EditStudent', navigation.state.params)}/>,
+      headerRight: <Button title='Edit' onPress={() => navigation.navigate('AddStudent', navigation.state.params)}/>,
     });
 
     componentDidMount() {
@@ -14,12 +14,9 @@ export default class Student extends Component {
     render() {
         return (
           <View style={styles.container}>
-            <View>
                 <Text>Name: {this.props.student.name && this.props.student.name}</Text>
-            </View>
-            <View >
+                <Text>Email: {this.props.student.name && this.props.student.email}</Text>
                 <Text>Campus: {this.props.student.name && this.props.student.campus.name}</Text>
-            </View>
           </View>
         )
     }

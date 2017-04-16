@@ -1,17 +1,20 @@
-import { connect } from 'react-redux'
-import addCampus from '../components/addCampus'
-import { setCampus } from '../reducers/setCampus'
+import { connect } from 'react-redux';
+import addCampus from '../components/addCampus';
+import { postCampus, startRemovingCampus } from '../reducers/campuses';
 
 const mapStateToProps = (state) => {
   return {
-    campuses: state.campus
+    campus: state.campus
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setCampus: (name, color) => {
-      dispatch(setCampus(name, color));
+    postCampus: (id, name, color) => {
+      dispatch(postCampus(id, name, color));
+    },
+    startRemovingCampus: (id) => {
+      dispatch(startRemovingCampus(id));
     }
   };
 };

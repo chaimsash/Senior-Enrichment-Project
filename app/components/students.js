@@ -36,7 +36,7 @@ export default class Students extends Component {
               </View>
                 {this.props.students.map((student) => {
                     return (
-                    <View key={student.id}>
+                    <View key={student.name}>
                           <TouchableHighlight onPress={() => this.props.navigation.navigate('Student', student)}>
                             <View style={styles.container} >
                               <View>

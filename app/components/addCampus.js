@@ -1,23 +1,35 @@
-
 import React, {Component} from 'react';
 import { StyleSheet, Text, Image, View, TextInput, ScrollView, ListView, Button} from 'react-native';
 
-export default class AddCampus extends Component{
-  static navigationOptions = ({ navigation, screenProps }) => ({
+export default class addCampus extends Component{
+  static navigationOptions = () => ({
     title: 'Add Campus',
-    headerRight: <Button title='Submit' onPress={() => console.log(this.props)}/>,
+    // headerRight: <Button title='Submit' onPress={() => this.handleSubmit()} />
   });
+
   constructor(props){
     super(props)
-
+    const navProps = props.navigation.state.params;
     this.state = {
-      campusName: '',
-      campusColor: ''
+      campusName: navProps ? props.navigation.state.params.name : '',
+      campusColor: navProps ? props.navigation.state.params.color : ''
     }
   }
 
+  handleSubmit(){
+    const navProps = this.props.navigation.state.params;
+    const id = navProps ? navProps.id : null;
+    this.props.postCampus(id, this.state.campusName, this.state.campusColor);
+    this.props.navigation.navigate('Campuses');
+  }
+
+  destroy(id){
+    this.props.startRemovingCampus(id);
+    this.props.navigation.navigate('Campuses');
+  }
+
   render(){
-    console.log(this.props)
+    const navProps = this.props.navigation.state.params;
     return (
       <View>
         <TextInput
@@ -32,6 +44,8 @@ export default class AddCampus extends Component{
           onChangeText={(campusColor) => this.setState({campusColor})}
           value={this.state.campusColor}
         />
+        <Button title={ navProps ? 'Update' : 'Submit' } onPress={() => this.handleSubmit()}/>
+        { navProps ? <Button title='Remove' color='red' onPress={() => this.destroy(navProps.id)} /> : <Text></Text>}
       </View>
     )
   }

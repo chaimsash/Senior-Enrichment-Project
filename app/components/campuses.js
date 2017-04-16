@@ -22,7 +22,7 @@ export default class MainScreen extends Component {
             <View style={styles.container}>
                 {this.props.campuses.map(function(campus) {
                     return (
-                        <View key={campus.id} style={[
+                        <View key={campus.name} style={[
                             styles.campus, {
                                 backgroundColor: campus.color
                             }

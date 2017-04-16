@@ -7,6 +7,9 @@ module.exports = db.define('campus', {
     type: Sequelize.STRING
   },
   color: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    set: function(color){
+      this.setDataValue('color', color.toLowerCase());
+    }
   }
 });
